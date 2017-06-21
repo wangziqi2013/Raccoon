@@ -21,7 +21,7 @@ public class App {
 	/**
 	 * Version identifier.
 	 */
-	public static final String VERSIONSTRING = "3.7";
+	public static final String VERSIONSTRING = "3.7-special-CMUISR";
 
 	/**
 	 * Relative path for keeping extension jars in
