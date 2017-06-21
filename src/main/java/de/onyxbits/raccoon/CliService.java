@@ -33,6 +33,7 @@ public class CliService implements FetchListener, Runnable {
 	private String[] cmdLine;
 	private DownloadLogger logger;
 	private Archive destination;
+	private boolean ignore_obb_flag = false;
 
 	public CliService(String[] cmdLine) {
 		this.cmdLine = cmdLine;
@@ -93,7 +94,6 @@ public class CliService implements FetchListener, Runnable {
 		// By default we do not ignore OBB and always download 
 		// all files. However if -g is specified then we set the
 		// flag, and pass the argument into the fetch service
-		bool ignore_obb_flag = false;
 		if (cmd.hasOption('g')) {
 			ignore_obb_flag = true;
 		}
