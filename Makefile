@@ -1,2 +1,2 @@
 all:
-	gradle -Pversion=4.x.y-DEV launch4j
+	gradle -Pversion=CMUISR launch4j
