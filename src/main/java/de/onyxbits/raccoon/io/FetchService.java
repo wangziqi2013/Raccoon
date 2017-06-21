@@ -26,9 +26,47 @@ public class FetchService implements Runnable {
 	private FetchListener callback;
 	private boolean paid;
 	private long received = 0;
+	private boolean ignore_obb_flag = false;
 
 	/**
 	 * Create a new downloader
+	 * 
+	 * @param archive
+	 *          archive to download to
+	 * @param appId
+	 *          app packagename
+	 * @param versionCode
+	 *          app version code
+	 * @param offerType
+	 *          app offertype
+	 * @param paid
+	 *          true if this is a paid application.
+	 * @param callback
+	 *          optional callback to notify about progress (may be null).
+	 * @param ignore_obb_flag
+	 *          Whether to ignore OBB files
+	 */
+	public FetchService(Archive archive, String appId, int versionCode, int offerType, boolean paid,
+			FetchListener callback,
+			boolean ignore_obb_flag) {
+		if (callback == null) {
+			throw new NullPointerException("A Callback is required!");
+		}
+		this.appId = appId;
+		this.versionCode = versionCode;
+		this.archive = archive;
+		this.offerType = offerType;
+		this.callback = callback;
+		this.paid = paid;
+
+		// If this flag is set we just ignore OBB files even if there are them
+		this.ignore_obb_flag = ignore_obb_flag;
+
+		return;
+	}
+
+	/**
+	 * Create a new downloader without the ignore OBB flag
 	 * 
 	 * @param archive
 	 *          archive to download to
@@ -54,6 +92,8 @@ public class FetchService implements Runnable {
 		this.offerType = offerType;
 		this.callback = callback;
 		this.paid = paid;
+
+		return;
 	}
 
 	public void run() {
@@ -89,8 +129,17 @@ public class FetchService implements Runnable {
 				return;
 			}
 
+			// Inform the user that it's happening
+			if(ignore_obb_flag == true) {
+				System.out.println("\nIgnore OBB files");
+			}
+
 			in = data.openMainExpansion();
-			if (in != null && !mainFile.exists()) {
+			// Download main expansion file - Note that we do not invoke
+			// the function if ignore OBB flag is turned on
+			if (in != null && 
+			    !mainFile.exists() && 
+					ignore_obb_flag == false) {
 				out = new FileOutputStream(mainFile);
 				callback.onBeginFile(this,mainFile);
 				boolean keepMain = transfer(in, out);
@@ -105,8 +154,12 @@ public class FetchService implements Runnable {
 				}
 			}
 
+			// Do the same for patch OBB file. Also do not download if the 
+			// ignore OBB flag is turned on
 			in = data.openPatchExpansion();
-			if (in != null && !patchFile.exists()) {
+			if (in != null && 
+			    !patchFile.exists() && 
+					ignore_obb_flag == false) {
 				out = new FileOutputStream(patchFile);
 				callback.onBeginFile(this,patchFile);
 				boolean keepPatch = transfer(in, out);
