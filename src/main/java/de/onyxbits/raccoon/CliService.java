@@ -66,6 +66,11 @@ public class CliService implements FetchListener, Runnable {
 
 		Option fetch = new Option("f", true, "Fetch an app (requires -a).");
 		fetch.setArgName("packId,versionCode,offerType");
+
+		// We add this option to disallow downloading of OBB files, and only download
+		// APK. This could save some bandwidth and storage if what we need is just APK
+		Option ignore_obb = new Option("g", false, "Ignore OBB (expansion file) and only downloads the APK");
+
 		importer.setArgName("file");
 		Options opts = new Options();
 		opts.addOption(version);
@@ -75,6 +80,7 @@ public class CliService implements FetchListener, Runnable {
 		opts.addOption(importer);
 		opts.addOption(fetch);
 		opts.addOption(paid);
+		opts.addOption(ignore_obb);
 		CommandLine cmd = null;
 		try {
 			cmd = new BasicParser().parse(opts, cmdLine);
