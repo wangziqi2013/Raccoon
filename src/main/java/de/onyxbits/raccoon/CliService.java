@@ -90,6 +90,14 @@ public class CliService implements FetchListener, Runnable {
 			System.exit(1);
 		}
 
+		// By default we do not ignore OBB and always download 
+		// all files. However if -g is specified then we set the
+		// flag, and pass the argument into the fetch service
+		bool ignore_obb_flag = false;
+		if (cmd.hasOption('g')) {
+			ignore_obb_flag = true;
+		}
+
 		if (cmd.hasOption('h')) {
 			new HelpFormatter().printHelp("Raccoon", opts);
 			System.exit(0);
@@ -129,7 +137,7 @@ public class CliService implements FetchListener, Runnable {
 				String appId = tmp[0];
 				int vc = Integer.parseInt(tmp[1]);
 				int ot = Integer.parseInt(tmp[2]);
-				new FetchService(destination, appId, vc, ot, cmd.hasOption('p'), this).run();
+				new FetchService(destination, appId, vc, ot, cmd.hasOption('p'), this, ignore_obb_flag).run();
 			}
 			catch (Exception e) {
 				System.err.println("Format: packagename,versioncode,offertype");
@@ -170,7 +178,7 @@ public class CliService implements FetchListener, Runnable {
 			}
 			File target = destination.fileUnder(pn, vc);
 			if (!target.exists()) {
-				FetchService fs = new FetchService(destination, pn, vc, ot, paid, this);
+				FetchService fs = new FetchService(destination, pn, vc, ot, paid, this, ignore_obb_flag);
 				fs.run();
 			}
 		}
