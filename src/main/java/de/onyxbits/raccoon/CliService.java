@@ -70,7 +70,7 @@ public class CliService implements FetchListener, Runnable {
 
 		// We add this option to disallow downloading of OBB files, and only download
 		// APK. This could save some bandwidth and storage if what we need is just APK
-		Option ignore_obb = new Option("g", false, "Ignore OBB (expansion file) and only downloads the APK");
+		Option ignore_obb = new Option("g", false, "Ignore OBB (expansion file) and only download the APK");
 
 		importer.setArgName("file");
 		Options opts = new Options();
