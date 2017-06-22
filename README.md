@@ -35,16 +35,9 @@ Building
 You could either use gradle or simply run "make". Previously this repo does not have a build script.
 I ported the build script from Raccoon 4 repo, and added a Makefile.
 
-Prebuild binaries
------------------
+Changes
+-------
 
-Ready to use binaries are available from:
-
-http://www.onyxbits.de/raccoon
-
-SHA1 Checksums:
-
-45e28f59a2a6d1fb17a100ee064bb035009331f5  raccoon-3.3.exe
-648487120fafd5ebbf1838c48556c81375e74aab  raccoon-3.3.jar
-3fe8548c944643500b8e5170d00e5c5ec70e266a  raccoon-3.2.exe
-b172ab687a11c5a0f37a2baa0ebc1cfe47b8bccc  raccoon-3.2.jar
+A few changes were made to customize this version of Raccoon and to support out work at Carnegie Mellon
+University. We added an optional switch, "-g", to let users choose to skip OBB files while obtaining
+the APK.
