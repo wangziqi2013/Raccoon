@@ -32,9 +32,8 @@ result in Raccoon creating one and linking it up with a pseudo device.
 Building
 --------
 
-Currently, this is only an eclipse project, so there is no ant file. You
-have to import the project into your workspace and resolve the dependencies
-listed in the libs/ dir.
+You could either use gradle or simply run "make". Previously this repo does not have a build script.
+I ported the build script from Raccoon 4 repo, and added a Makefile.
 
 Prebuild binaries
 -----------------
