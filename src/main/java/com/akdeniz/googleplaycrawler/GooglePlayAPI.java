@@ -258,7 +258,8 @@ public class GooglePlayAPI {
 		HttpEntity c2dmResponseEntity = executePost(URL_LOGIN,
 				new String[][] {
 						{ "Email", this.getEmail() },
-						{ "Passwd", this.password },
+						//{ "Passwd", this.password },
+						{ "EncryptedPasswd", encryptString(this.getEmail()+"\u0000"+this.password) },
 						{ "add_account", "1"},
 						{ "service", "ac2dm" },
 						{ "accountType", ACCOUNT_TYPE_HOSTED_OR_GOOGLE },
@@ -305,7 +306,8 @@ public class GooglePlayAPI {
 
 		HttpEntity responseEntity = executePost(URL_LOGIN, new String[][] {
 				{ "Email", this.getEmail() },
-				{ "Passwd", this.password },
+				//{ "Passwd", this.password },
+				{ "EncryptedPasswd", encryptString(this.getEmail()+"\u0000"+this.password) },
 				{ "service", "androidmarket" },
 				{ "add_account", "1"},
 				{ "accountType", ACCOUNT_TYPE_HOSTED_OR_GOOGLE },
