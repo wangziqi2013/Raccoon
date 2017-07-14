@@ -185,6 +185,14 @@ public class GooglePlayAPI {
 		return postCheckin(build.toByteArray());
 	}
 
+  /**
+	 * This is backported from racoon 4.x 
+	 */
+	private static int readInt(byte[] bArr, int i) {
+		return (((((bArr[i] & 255) << 24) | 0) | ((bArr[i + 1] & 255) << 16)) | ((bArr[i + 2] & 255) << 8))
+				| (bArr[i + 3] & 255);
+	}
+
 	/**
 	 * Logins AC2DM server and returns authentication string.
 	 */
