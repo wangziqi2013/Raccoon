@@ -194,6 +194,29 @@ public class GooglePlayAPI {
 	}
 
 	/**
+	 * This is backported from racoon 4.x 
+	 */
+	public static PublicKey createKeyFromString(String str, byte[] bArr) {
+    try {
+        byte[] decode = Base64.decode(str, 0);
+        int readInt = readInt(decode, 0);
+        byte[] obj = new byte[readInt];
+        System.arraycopy(decode, 4, obj, 0, readInt);
+        BigInteger bigInteger = new BigInteger(1, obj);
+        int readInt2 = readInt(decode, readInt + 4);
+        byte[] obj2 = new byte[readInt2];
+        System.arraycopy(decode, readInt + 8, obj2, 0, readInt2);
+        BigInteger bigInteger2 = new BigInteger(1, obj2);
+        decode = MessageDigest.getInstance("SHA-1").digest(decode);
+        bArr[0] = (byte) 0;
+        System.arraycopy(decode, 0, bArr, 1, 4);
+        return KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(bigInteger, bigInteger2));
+    } catch (Throwable e) {
+        throw new RuntimeException(e);
+    }
+	}
+
+	/**
 	 * Logins AC2DM server and returns authentication string.
 	 */
 	public String loginAC2DM() throws IOException {
