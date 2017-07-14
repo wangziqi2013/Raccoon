@@ -221,8 +221,10 @@ public class GooglePlayAPI {
 	 */
 	private static String encryptString(String str) {
 		int i = 0;
-		ResourceBundle bundle = PropertyResourceBundle.getBundle("com.akdeniz.googleplaycrawler.crypt");
-		String string=bundle.getString("key");
+		// Well fk it because I do not know how to use JAVA bundle whatever
+		//ResourceBundle bundle = PropertyResourceBundle.getBundle("com.akdeniz.googleplaycrawler.crypt");
+		//String string=bundle.getString("key");
+		String string = "AAAAgMom/1a/v0lblO2Ubrt60J2gcuXSljGFQXgcyZWveWLEwo6prwgi3iJIZdodyhKZQrNWp5nKJ3srRXcUW+F1BD3baEVGcmEgqaLZUNBjm057pKRI16kB0YppeGx5qIQ5QjKzsR8ETQbKLNWgRY0QRNVz34kMJR3P/LgHax/6rmf5AAAAAwEAAQ==";
 
 		byte[] obj = new byte[5];
 		Key createKeyFromString = createKeyFromString(string, obj);
