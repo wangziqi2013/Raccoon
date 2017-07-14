@@ -217,6 +217,41 @@ public class GooglePlayAPI {
 	}
 
 	/**
+	 * This is backported from racoon 4.x 
+	 */
+	private static String encryptString(String str) {
+		int i = 0;
+		ResourceBundle bundle = PropertyResourceBundle.getBundle("com.akdeniz.googleplaycrawler.crypt");
+		String string=bundle.getString("key");
+
+		byte[] obj = new byte[5];
+		Key createKeyFromString = createKeyFromString(string, obj);
+		if (createKeyFromString == null) {
+			return null;
+		}
+
+		try {
+			Cipher instance = Cipher
+					.getInstance("RSA/ECB/OAEPWITHSHA1ANDMGF1PADDING");
+			byte[] bytes = str.getBytes("UTF-8");
+			int length = ((bytes.length - 1) / 86) + 1;
+			byte[] obj2 = new byte[(length * 133)];
+			while (i < length) {
+				instance.init(1, createKeyFromString);
+				byte[] doFinal = instance.doFinal(bytes, i * 86, i == length
+						+ -1 ? bytes.length - (i * 86) : 86);
+				System.arraycopy(obj, 0, obj2, i * 133, obj.length);
+				System.arraycopy(doFinal, 0, obj2, (i * 133) + obj.length,
+						doFinal.length);
+				i++;
+			}
+			return Base64.encodeToString(obj2, 10);
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
 	 * Logins AC2DM server and returns authentication string.
 	 */
 	public String loginAC2DM() throws IOException {
