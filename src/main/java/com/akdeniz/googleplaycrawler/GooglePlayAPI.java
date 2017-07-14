@@ -48,6 +48,7 @@ import com.akdeniz.googleplaycrawler.GooglePlay.ReviewResponse;
 import com.akdeniz.googleplaycrawler.GooglePlay.SearchResponse;
 import com.akdeniz.googleplaycrawler.GooglePlay.UploadDeviceConfigRequest;
 import com.akdeniz.googleplaycrawler.GooglePlay.UploadDeviceConfigResponse;
+import com.akdeniz.googleplaycrawler.misc.Base64;
 
 /**
  * This class provides
